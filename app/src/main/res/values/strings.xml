@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Coronavirus COVID-19 Global Cases</string>
+    <string name="country_flag">Country Flag</string>
+    <string name="infected">Cases:</string>
+    <string name="recovered">Recovered:</string>
+    <string name="country">Country</string>
+    <string name="deaths">Deaths:</string>
+    <string name="active">Active:</string>
+    <string name="today_deaths">Today Deaths:</string>
+    <string name="today_cases">Today Cases:</string>
+    <string name="virus_icon">virus icon</string>
+</resources>
