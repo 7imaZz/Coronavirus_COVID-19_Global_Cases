@@ -9,4 +9,5 @@
     <string name="today_deaths">Today Deaths:</string>
     <string name="today_cases">Today Cases:</string>
     <string name="virus_icon">virus icon</string>
+    <string name="search">Search</string>
 </resources>

@@ -58,7 +58,7 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/virus"
+                            android:src="@mipmap/virus"
                             android:layout_gravity="center"
                             tools:ignore="ContentDescription" />
                         <TextView
@@ -86,7 +86,7 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/recover"
+                            android:src="@mipmap/recover"
                             android:layout_gravity="center"
                             tools:ignore="ContentDescription" />
 
@@ -113,7 +113,7 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/death"
+                            android:src="@mipmap/death"
                             tools:ignore="ContentDescription" />
 
                         <TextView
@@ -147,7 +147,7 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/virus"
+                            android:src="@mipmap/to_virus"
                             android:layout_gravity="center"
                             android:contentDescription="@string/virus_icon" />
 
@@ -178,7 +178,7 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/death"
+                            android:src="@mipmap/to_death"
                             tools:ignore="ContentDescription" />
                         <TextView
                             android:id="@+id/tv_to_deaths"
@@ -202,7 +202,7 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/active"
+                            android:src="@mipmap/active"
                             tools:ignore="ContentDescription" />
                         <TextView
                             android:id="@+id/tv_active"

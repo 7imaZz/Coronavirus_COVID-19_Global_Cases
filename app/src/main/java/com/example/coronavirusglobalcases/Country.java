@@ -1,29 +1,38 @@
 package com.example.coronavirusglobalcases;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Country {
 
+    @SerializedName("rank")
+    @Expose
     private String rank;
+    @SerializedName("country")
+    @Expose
     private String name;
+    @SerializedName("cases")
+    @Expose
     private String cases;
+    @SerializedName("deaths")
+    @Expose
     private String deaths;
+    @SerializedName("recovered")
+    @Expose
     private String recovered;
+    @SerializedName("todayCases")
+    @Expose
     private String todayCases;
+    @SerializedName("todayDeaths")
+    @Expose
     private String todayDeaths;
+    @SerializedName("active")
+    @Expose
     private String active;
 
 
     public Country(String rank, String name, String cases, String deaths, String recovered, String todayCases, String todayDeaths, String active) {
         this.rank = rank;
-        this.name = name;
-        this.cases = cases;
-        this.deaths = deaths;
-        this.recovered = recovered;
-        this.todayCases = todayCases;
-        this.todayDeaths = todayDeaths;
-        this.active = active;
-    }
-
-    public Country(String name, String cases, String deaths, String recovered, String todayCases, String todayDeaths, String active) {
         this.name = name;
         this.cases = cases;
         this.deaths = deaths;
@@ -42,7 +51,7 @@ public class Country {
         this.rank = rank;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
@@ -50,7 +59,7 @@ public class Country {
         this.name = name;
     }
 
-    public String getCases() {
+    String getCases() {
         return cases;
     }
 
@@ -58,7 +67,7 @@ public class Country {
         this.cases = cases;
     }
 
-    public String getDeaths() {
+    String getDeaths() {
         return deaths;
     }
 
@@ -66,7 +75,7 @@ public class Country {
         this.deaths = deaths;
     }
 
-    public String getRecovered() {
+    String getRecovered() {
         return recovered;
     }
 
@@ -74,7 +83,7 @@ public class Country {
         this.recovered = recovered;
     }
 
-    public String getTodayCases() {
+    String getTodayCases() {
         return todayCases;
     }
 
@@ -82,7 +91,7 @@ public class Country {
         this.todayCases = todayCases;
     }
 
-    public String getTodayDeaths() {
+    String getTodayDeaths() {
         return todayDeaths;
     }
 
@@ -90,7 +99,7 @@ public class Country {
         this.todayDeaths = todayDeaths;
     }
 
-    public String getActive() {
+    String getActive() {
         return active;
     }
 

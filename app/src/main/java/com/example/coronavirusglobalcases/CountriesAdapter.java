@@ -5,26 +5,27 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.CountriesViewHolder> {
+public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.CountriesViewHolder> implements Filterable{
 
 
 
-    public class CountriesViewHolder extends RecyclerView.ViewHolder {
+    class CountriesViewHolder extends RecyclerView.ViewHolder {
 
         private TextView rankTextView,countryTextView, casesTextView, deathsTextView, recoveryTextView, toCasesTextView
                 ,toDeathsTextView, activeTextView;
 
-        public CountriesViewHolder(@NonNull View itemView) {
+        CountriesViewHolder(@NonNull View itemView) {
             super(itemView);
 
             rankTextView = itemView.findViewById(R.id.tv_rank);
@@ -40,10 +41,12 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.Coun
 
     private Context context;
     private List<Country> countries;
+    private List<Country> itemsCopy;
 
-    public CountriesAdapter(Context context, List<Country> countries) {
+    CountriesAdapter(Context context, List<Country> countries) {
         this.context = context;
         this.countries = countries;
+        itemsCopy = new ArrayList<>(countries);
     }
 
     @NonNull
@@ -75,4 +78,37 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.Coun
     }
 
 
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    private Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<Country> filteredList = new ArrayList<>();
+            if (charSequence == null || charSequence.length()==0){
+                filteredList.addAll(itemsCopy);
+            }else {
+                String filterPattern = charSequence.toString().toLowerCase().trim();
+
+                for (Country item: itemsCopy){
+                    if (item.getName().toLowerCase().contains(filterPattern)){
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            countries.clear();
+            countries.addAll((List)filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 }
