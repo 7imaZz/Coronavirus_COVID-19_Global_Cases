@@ -9,11 +9,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView countriesRecyclerView;
     private ProgressBar progressBar;
     private SwipeRefreshLayout refreshLayout;
+    private TextView noInternetTextView;
     private List<Country> countries = new ArrayList<>();
     private CountriesAdapter countriesAdapter;
 
@@ -42,37 +47,53 @@ public class MainActivity extends AppCompatActivity {
         countriesRecyclerView = findViewById(R.id.rv_countries);
         progressBar = findViewById(R.id.pb_loading);
         refreshLayout = findViewById(R.id.refresh);
+        noInternetTextView = findViewById(R.id.tv_no_internet);
 
 
         countriesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         countriesRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://coronavirus-19-api.herokuapp.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
-        CoronaApi coronaApi = retrofit.create(CoronaApi.class);
+        if (networkInfo != null && networkInfo.isConnected()) {
 
-        Call<List<Country>> call = coronaApi.countryList();
+            noInternetTextView.setVisibility(View.GONE);
 
-        call.enqueue(new Callback<List<Country>>() {
-            @Override
-            public void onResponse(Call<List<Country>> call, Response<List<Country>> response) {
-                countries = response.body();
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://coronavirus-19-api.herokuapp.com/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+            CoronaApi coronaApi = retrofit.create(CoronaApi.class);
+            Call<List<Country>> call = coronaApi.countryList();
 
-                countriesAdapter = new CountriesAdapter(MainActivity.this, countries);
 
-                countriesRecyclerView.setAdapter(countriesAdapter);
-                progressBar.setVisibility(View.GONE);
-            }
+            call.enqueue(new Callback<List<Country>>() {
+                @Override
+                public void onResponse(Call<List<Country>> call, Response<List<Country>> response) {
+                    countries = response.body();
 
-            @Override
-            public void onFailure(Call<List<Country>> call, Throwable t) {
 
-            }
-        });
+                    countriesAdapter = new CountriesAdapter(MainActivity.this, countries);
+
+                    countriesRecyclerView.setAdapter(countriesAdapter);
+                    progressBar.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onFailure(Call<List<Country>> call, Throwable t) {
+
+                }
+            });
+
+        }
+        else{
+            progressBar.setVisibility(View.GONE);
+        }
+
+
+
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

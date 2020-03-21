@@ -10,4 +10,5 @@
     <string name="today_cases">Today Cases:</string>
     <string name="virus_icon">virus icon</string>
     <string name="search">Search</string>
+    <string name="no_internet_connection">No Internet Connection</string>
 </resources>
