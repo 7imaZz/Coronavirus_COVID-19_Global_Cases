@@ -1,6 +1,7 @@
 package com.example.coronavirusglobalcases;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.MenuItemCompat;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -18,6 +20,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private SwipeRefreshLayout refreshLayout;
     private TextView noInternetTextView;
+    FloatingActionButton moreInfoButton;
     private List<Country> countries = new ArrayList<>();
     private CountriesAdapter countriesAdapter;
 
@@ -48,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.pb_loading);
         refreshLayout = findViewById(R.id.refresh);
         noInternetTextView = findViewById(R.id.tv_no_internet);
+        moreInfoButton = findViewById(R.id.fab_more_info);
 
 
         countriesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -105,6 +112,47 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        moreInfoButton.setOnClickListener(new View.OnClickListener() {
+
+
+
+            @Override
+            public void onClick(View view) {
+
+                int totalCases = 0;
+                int totalDeaths = 0;
+                int totalRecovered = 0;
+                int totalTodayCases = 0;
+                int totalTodayDeaths = 0;
+                int totalActive = 0;
+
+                for(Country country: countries){
+                    totalCases += Integer.parseInt(country.getCases());
+                    totalDeaths += Integer.parseInt(country.getDeaths());
+                    totalRecovered += Integer.parseInt(country.getRecovered());
+                    totalTodayCases += Integer.parseInt(country.getTodayCases());
+                    totalTodayDeaths += Integer.parseInt(country.getTodayDeaths());
+                    totalActive += Integer.parseInt(country.getActive());
+                }
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+                builder.setTitle("Total");
+                builder.setMessage("Cases: "+totalCases+
+                        "\n\nDeaths: "+totalDeaths+
+                        "\n\nRecovered: "+totalRecovered+
+                        "\n\nActive: "+totalActive+
+                        "\n\nToday Cases: "+totalTodayCases+
+                        "\n\nToday Deaths: "+totalTodayDeaths);
+                builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                builder.create().show();
+            }
+        });
 
     }
 
